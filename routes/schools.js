@@ -34,6 +34,7 @@ router.get('/listSchools', (req, res) => {
 
     const latitudeNum = parseFloat(userLatitude);
     const longitudeNum = parseFloat(userLongitude);
+    console.log(latitudeNum, longitudeNum)
 
     if (isNaN(latitudeNum) || isNaN(longitudeNum)) {
         return res.status(400).json({ message: 'userLatitude and userLongitude must be valid numbers!' });
@@ -43,14 +44,14 @@ router.get('/listSchools', (req, res) => {
         SELECT 
             *, 
             ST_Distance_Sphere(
-                POINT(longitude, latitude), 
+                POINT(latitude, longitude), 
                 POINT(?, ?)
-            ) AS distance 
+            ) / 1000 AS distance 
         FROM schools 
         ORDER BY distance ASC;
     `;
 
-    db.query(query, [longitudeNum, latitudeNum], (err, result) => {
+    db.query(query, [latitudeNum, longitudeNum], (err, result) => {
         if (err) {
             return res.status(500).json({ message: err.message });
         }
