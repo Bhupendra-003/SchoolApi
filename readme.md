@@ -104,8 +104,8 @@ GET /listSchools?latitude=28.7041&longitude=77.1025
 ---
 
 ##  Postman Collection
-To test the APIs, import the Postman collection:
-[Download Postman Collection](#)
+To test the APIs, visit the Postman collection:
+[Postman Collection](https://school-api-team-9006.postman.co/workspace/My-Workspace~16e78c9a-8719-4659-861b-b315bb2c69f4/collection/42403179-a6374170-b930-43c3-ae1b-27e784e20ec7?action=share&creator=42403179)
 
 ---
 

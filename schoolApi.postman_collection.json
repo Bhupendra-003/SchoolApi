@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "a6374170-b930-43c3-ae1b-27e784e20ec7",
+		"name": "schoolApi",
+		"description": "This API provides endpoints to add and retrieve schools, storing their details in a MySQL database. It supports adding a school with its name, address, and coordinates and fetching a list of schools sorted by proximity to the user's location.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "42403179"
+	},
+	"item": [
+		{
+			"name": "addSchool",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"St. Marin School\",\n  \"address\": \"Pune, Maharashta\",\n  \"latitude\": 18.5045,\n  \"longitude\": 73.8837\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://schoolapi-rzyr.onrender.com/api/addSchool",
+				"description": "# **POST Request**\n\n**Content-Type**: application/json\n\n**Description**: Adds a new school to database\n\nBase URL: `http://your-server-url/api`\n\n## **Request Body (JSON):**\n\n`{ \"name\": \"Example` `School\", \"address\": \"Example address\", \"latitude\": 28.7041, \"longitude\": 77.1025 }`\n\n### **JSON Response:**\n\n### **Success Response (201 Created)**  \n`{ \"message\": \"School Added successfully!\", \"SchoolID\":123 }`\n\n### **ERROR**\n\n1. Missing Fields (400 Bad Request)\n    \n\n`{ \"message\": 'All fields are required!!' }`\n\n2\\. Invalid Datatype (400 Bad Request)\n\n`{ \"message\": \"Latitude and Longitude must be valid numbers!\" }`"
+			},
+			"response": [
+				{
+					"name": "Amity International School",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Amity International School\",\n  \"address\": \"Gwalior, Madhya Pradesh\",\n  \"latitude\": 26.2758554,\n  \"longitude\": 78.227400\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://schoolapi-rzyr.onrender.com/api/addSchool"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Rockwood Public School",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Rockwood International School\",\n  \"address\": \"Udaipur, Rajasthan\",\n  \"latitude\": 26.6213,\n  \"longitude\": 73.7245\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://schoolapi-rzyr.onrender.com/api/addSchool"
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "listSchool",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://schoolapi-rzyr.onrender.com/api/listSchools?userLatitude=26.2169&userLongitude=78.2264",
+					"protocol": "http",
+					"host": [
+						"schoolapi-rzyr",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"listSchools"
+					],
+					"query": [
+						{
+							"key": "userLatitude",
+							"value": "26.2169"
+						},
+						{
+							"key": "userLongitude",
+							"value": "78.2264"
+						}
+					]
+				},
+				"description": "# GET REQUEST\n\n**Content-Type**: application/json\n\n**Description**: Retrieves a list of schools sorted by distance from the user's location.\n\n**Base URL:** `http://schoolapi-rzyr.onrender.com/api/`\n\n## **Query Parameters:**\n\n| Parameter | **Type** | Required | **Description** |\n| --- | --- | --- | --- |\n| `userLatittude` | Number | Yes | User's Latitude |\n| `userLongitude` | Number | Yes | User's Longitude |\n\n## **Responses:**\n\n### **Succes Response (200):**  \n`[ { \"id\": 1, \"name\": \"Example School\", \"address\": \"123 Main St\", \"latitude\": 34.0522, \"longitude\": -118.2437, \"distance\": 5.234 // In Kilometers }, // ... more schools ]`\n\n### **400 Bad Request:**  \n`{ \"message\": \"userLatitude and userLongitude are Required\" }`\n\n_OR_\n\n`{ \"message\": \"userLatitude and userLongitude must be valid numbers!\" }`"
+			},
+			"response": [
+				{
+					"name": "user1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://schoolapi-rzyr.onrender.com/api/listSchools?userLatitude=28.7041&userLongitude=77.1025",
+							"protocol": "http",
+							"host": [
+								"schoolapi-rzyr",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"listSchools"
+							],
+							"query": [
+								{
+									"key": "userLatitude",
+									"value": "28.7041"
+								},
+								{
+									"key": "userLongitude",
+									"value": "77.1025"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "user2",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://schoolapi-rzyr.onrender.com/api/listSchools?userLatitude=28.7248&userLongitude=77.2215",
+							"protocol": "http",
+							"host": [
+								"schoolapi-rzyr",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"listSchools"
+							],
+							"query": [
+								{
+									"key": "userLatitude",
+									"value": "28.7248"
+								},
+								{
+									"key": "userLongitude",
+									"value": "77.2215"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}
