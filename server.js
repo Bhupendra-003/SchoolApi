@@ -1,11 +1,23 @@
 require("dotenv").config();
-const express = require('express');
+const path = require("path");
+const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
-app.use(bodyParser.json());
 const PORT = 3000;
 
+// Middleware
+app.use(bodyParser.json());
+
+// Serve static files (CSS, JS, images) from the public folder
+app.use(express.static(path.join(__dirname, "public")));
+
+// Route for homepage
+app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "public", "index.html"));
+});
+
+// Import and use school routes
 const schoolRoutes = require("./routes/schools");
 app.use("/api", schoolRoutes);
 

@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management API Documentation</title>
+    <style>
+        :root {
+            --background: #121212;
+            --card-bg: #1e1e1e;
+            --text: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --purple: #a970ff;
+            --purple-dark: #8a42ff;
+            --code-bg: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--purple);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--purple);
+        }
+
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .highlight {
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 100%;
+            height: 3px;
+            background-color: var(--purple);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--purple);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .endpoint {
+            font-family: monospace;
+            font-size: 1.1rem;
+            background-color: var(--code-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+            display: inline-block;
+        }
+
+        .method {
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .method.post {
+            color: #61affe;
+        }
+
+        .method.get {
+            color: #49cc90;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            color: #e0e0e0;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: var(--purple);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            background-color: var(--purple-dark);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--purple);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(169, 112, 255, 0.2);
+            border: none;
+            color: var(--purple);
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .copy-button:hover {
+            background: rgba(169, 112, 255, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M3 5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5Z"
+                        stroke="#a970ff" stroke-width="2" />
+                    <path d="M7 7L17 7" stroke="#a970ff" stroke-width="2" stroke-linecap="round" />
+                    <path d="M7 12L17 12" stroke="#a970ff" stroke-width="2" stroke-linecap="round" />
+                    <path d="M7 17L13 17" stroke="#a970ff" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <h1>School Management <span>API</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#endpoints">Endpoints</a></li>
+                    <li><a href="#testing">Testing</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2>Manage Schools with <span class="highlight">Geolocation</span> Support</h2>
+            <p>A robust API solution for school management with location-based features, built with Node.js, Express,
+                and MySQL.</p>
+        </section>
+
+        <section id="overview">
+            <h2>Overview</h2>
+            <div class="card">
+                <p>The <span class="highlight">School Management API</span> allows you to:</p>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li>Add new schools with detailed location information</li>
+                    <li>Retrieve schools sorted by proximity to a specified location</li>
+                    <li>Manage educational institution data through a simple RESTful interface</li>
+                </ul>
+                <p>This API is ideal for educational platforms, school directory applications, or any service that
+                    requires location-based school information.</p>
+            </div>
+        </section>
+
+        <section id="getting-started">
+            <h2>Getting Started</h2>
+
+            <h3>Prerequisites</h3>
+            <div class="card">
+                <p>Before you begin, ensure you have the following installed:</p>
+                <ul style="margin: 1rem 0 1rem 2rem;">
+                    <li>Node.js (v14 or higher)</li>
+                    <li>MySQL database</li>
+                    <li>Git</li>
+                </ul>
+            </div>
+
+            <h3>Installation</h3>
+            <div class="card">
+                <p><strong>1. Clone the repository</strong></p>
+                <pre><code>git clone https://github.com/Bhupendra-003/SchoolApi.git</code><button class="copy-button">Copy</button></pre>
+
+                <p><strong>2. Install dependencies</strong></p>
+                <pre><code>npm install</code><button class="copy-button">Copy</button></pre>
+
+                <p><strong>3. Set up the database</strong></p>
+                <p>Create a MySQL database and run the following SQL script:</p>
+                <pre><code>CREATE TABLE schools (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  latitude FLOAT NOT NULL,
+  longitude FLOAT NOT NULL
+);</code><button class="copy-button">Copy</button></pre>
+
+                <p><strong>4. Configure environment variables</strong></p>
+                <p>Create a <code>.env</code> file in the project root and add:</p>
+                <pre><code>DB_HOST=your-mysql-host
+DB_USER=your-mysql-user
+DB_PASS=your-mysql-password
+DB_NAME=your-mysql-database</code><button class="copy-button">Copy</button></pre>
+
+                <p><strong>5. Start the server</strong></p>
+                <pre><code>npm start</code><button class="copy-button">Copy</button></pre>
+                <p>Your API will be running at <code>http://localhost:3000</code></p>
+            </div>
+        </section>
+
+        <section id="endpoints">
+            <h2>API Endpoints</h2>
+
+            <h3>Add School</h3>
+            <div class="card">
+                <div class="endpoint">
+                    <span class="method post">POST</span>/api/addSchool
+                </div>
+                <p><strong>Description:</strong> Adds a new school to the database with location details.</p>
+
+                <p><strong>Request Body:</strong></p>
+                <pre><code>{
+  "name": "ABC High School",
+  "address": "123 Main St, City, Country",
+  "latitude": 28.7041,
+  "longitude": 77.1025
+}</code><button class="copy-button">Copy</button></pre>
+
+                <p><strong>Response:</strong></p>
+                <pre><code>{
+  "message": "School added successfully!"
+}</code><button class="copy-button">Copy</button></pre>
+
+                <p><strong>Parameters:</strong></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>name</td>
+                            <td>String</td>
+                            <td>The name of the school</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>address</td>
+                            <td>String</td>
+                            <td>Physical address of the school</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>latitude</td>
+                            <td>Float</td>
+                            <td>Latitude coordinate</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>longitude</td>
+                            <td>Float</td>
+                            <td>Longitude coordinate</td>
+                            <td>Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>List Schools</h3>
+            <div class="card">
+                <div class="endpoint">
+                    <span class="method get">GET</span>/api/listSchools
+                </div>
+                <p><strong>Description:</strong> Retrieves a list of schools sorted by proximity to a user-specified
+                    location.</p>
+
+                <p><strong>Query Parameters:</strong></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>latitude</td>
+                            <td>Float</td>
+                            <td>User's current latitude</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>longitude</td>
+                            <td>Float</td>
+                            <td>User's current longitude</td>
+                            <td>Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Example Request:</strong></p>
+                <pre><code>GET /api/listSchools?latitude=28.7041&longitude=77.1025</code><button class="copy-button">Copy</button></pre>
+
+                <p><strong>Response:</strong></p>
+                <pre><code>[
+  {
+    "id": 1,
+    "name": "ABC High School",
+    "address": "123 Main St, City, Country",
+    "latitude": 28.7041,
+    "longitude": 77.1025,
+    "distance": 2.5
+  },
+  {
+    "id": 2,
+    "name": "XYZ Public School",
+    "address": "456 Park Ave, City, Country",
+    "latitude": 28.7121,
+    "longitude": 77.1325,
+    "distance": 4.7
+  }
+]</code><button class="copy-button">Copy</button></pre>
+
+                <p><strong>Response Fields:</strong></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>Integer</td>
+                            <td>Unique identifier of the school</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>String</td>
+                            <td>Name of the school</td>
+                        </tr>
+                        <tr>
+                            <td>address</td>
+                            <td>String</td>
+                            <td>Physical address of the school</td>
+                        </tr>
+                        <tr>
+                            <td>latitude</td>
+                            <td>Float</td>
+                            <td>Latitude coordinate of the school</td>
+                        </tr>
+                        <tr>
+                            <td>longitude</td>
+                            <td>Float</td>
+                            <td>Longitude coordinate of the school</td>
+                        </tr>
+                        <tr>
+                            <td>distance</td>
+                            <td>Float</td>
+                            <td>Distance in kilometers from the user's specified location</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="testing">
+            <h2>Testing the API</h2>
+            <div class="card">
+                <p>You can test the API endpoints using the provided Postman collection:</p>
+                <p style="margin: 1rem 0;">
+                    <a href="https://school-api-team-9006.postman.co/workspace/My-Workspace~16e78c9a-8719-4659-861b-b315bb2c69f4/collection/42403179-a6374170-b930-43c3-ae1b-27e784e20ec7?action=share&creator=42403179"
+                        class="button" target="_blank">Access Postman Collection</a>
+                </p>
+                <p>The collection includes pre-configured requests for each API endpoint, making it easy to test the
+                    functionality without writing any code.</p>
+            </div>
+        </section>
+
+        <section id="error-handling">
+            <h2>Error Handling</h2>
+            <div class="card">
+                <p>The API returns appropriate HTTP status codes along with error messages:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Status Code</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>200</td>
+                            <td>Success</td>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                            <td>Bad Request - Missing or invalid parameters</td>
+                        </tr>
+                        <tr>
+                            <td>500</td>
+                            <td>Server Error - Database or internal server error</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Example error response:</p>
+                <pre><code>{
+  "error": "Missing required parameters: latitude and longitude are required"
+}</code><button class="copy-button">Copy</button></pre>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>School Management API Documentation &copy; 2025 | Created by Bhupendra Singh Rajput</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://github.com/Bhupendra-003/SchoolApi"
+                    style="color: var(--purple); text-decoration: none;">View on GitHub</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Add functionality to copy buttons
+        document.querySelectorAll('.copy-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const codeBlock = button.previousSibling;
+                const textToCopy = codeBlock.textContent;
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
