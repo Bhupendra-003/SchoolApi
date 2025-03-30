@@ -57,7 +57,7 @@ The API will be running at `http://localhost:3000`
 ##  API Endpoints
 
 ###  Add School
-**Endpoint:** `POST /addSchool`
+**Endpoint:** `POST /api/addSchool`
 **Description:** Adds a new school to the database.
 **Request Body:**
 ```json
@@ -76,14 +76,14 @@ The API will be running at `http://localhost:3000`
 ```
 
 ###  List Schools (Sorted by Proximity)
-**Endpoint:** `GET /listSchools`
+**Endpoint:** `GET /api/listSchools`
 **Query Parameters:**
 - `userLatitude` (required)
 - `userLongitude` (required)
 
 **Example Request:**
 ```
-GET /listSchools?latitude=28.7041&longitude=77.1025
+GET /api/listSchools?latitude=28.7041&longitude=77.1025
 ```
 
 **Response:**
