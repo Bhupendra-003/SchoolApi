@@ -2,12 +2,14 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 
 const app = express();
 const PORT = 3000;
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors());
 
 // Serve static files (CSS, JS, images) from the public folder
 app.use(express.static(path.join(__dirname, "public")));
